@@ -142,6 +142,8 @@ a {
 
 .hero-bg,
 .hero-bg img,
+.hero-frame-layer,
+.hero-frame,
 .cta-image,
 .cta-image img {
   position: absolute;
@@ -149,12 +151,14 @@ a {
 }
 
 .hero-bg img,
+.hero-frame,
 .cta-image img {
   height: 100%;
   object-fit: cover;
 }
 
 .hero-bg {
+  opacity: 0;
   transform: translate3d(
       var(--hero-bg-x, 0px),
       calc(var(--motion-y, 0px) + var(--hero-bg-y, 0px)),
@@ -165,7 +169,24 @@ a {
   will-change: transform, filter;
 }
 
-.hero-bg::after {
+.hero-frame-layer {
+  z-index: 1;
+  overflow: hidden;
+  transform: translate3d(0, var(--motion-y, 0px), 0) scale(var(--motion-scale, 1.02));
+  transform-origin: center;
+  background: #eaf8fa;
+  will-change: transform;
+}
+
+.hero-frame {
+  object-position: center;
+  transform: scale(var(--hero-frame-scale, 1));
+  transform-origin: center;
+  will-change: transform;
+}
+
+.hero-bg::after,
+.hero-frame-layer::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -176,19 +197,10 @@ a {
 
 .hero-inner {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: min(100%, var(--max));
   margin: 0 auto;
   padding: 116px 42px 60px;
-}
-
-.hero-sequence {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
 }
 
 .hero-copy {
@@ -661,6 +673,7 @@ h3 {
   }
 
   .hero-bg::after,
+  .hero-frame-layer::after,
   .cta-image::after {
     background:
       linear-gradient(180deg, rgba(251, 253, 255, 0.82) 0%, rgba(251, 253, 255, 0.3) 42%, rgba(251, 253, 255, 0.88) 100%),
@@ -668,9 +681,10 @@ h3 {
   }
 
   .hero-bg img,
+  .hero-frame,
   .cta-image img,
   .sticky-media img {
-    object-position: 66% center;
+    object-position: 62% center;
   }
 
   .hero-inner {
@@ -727,6 +741,8 @@ h3 {
 
   [data-motion],
   [data-motion] img,
+  .hero-frame-layer,
+  .hero-frame,
   [data-float] {
     transform: none !important;
   }
