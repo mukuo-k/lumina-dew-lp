@@ -936,8 +936,22 @@ h2 span {
   }
 
   .hero-video {
+    object-fit: cover;
     object-position: center;
     transform: none;
+  }
+
+  body.intro-playing .hero-video,
+  body.intro-complete .hero-video {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  body.intro-complete .hero-video-layer::after {
+    opacity: 1;
+    background:
+      linear-gradient(180deg, rgba(234, 248, 250, 0.06) 0%, rgba(234, 248, 250, 0.28) 48%, rgba(234, 248, 250, 0.82) 100%),
+      linear-gradient(90deg, rgba(251, 253, 255, 0.48), rgba(251, 253, 255, 0.04) 52%, rgba(251, 253, 255, 0.32));
   }
 
   .hero-inner {
@@ -951,6 +965,9 @@ h2 span {
   .hero-copy {
     max-width: 100%;
     padding: 18px;
+    background: rgba(251, 253, 255, 0.96);
+    border-color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 16px 42px rgba(21, 61, 75, 0.14);
   }
 
   h1 {
