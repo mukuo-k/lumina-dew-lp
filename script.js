@@ -1,4 +1,5 @@
 const root = document.documentElement;
+const body = document.body;
 const header = document.querySelector("[data-header]");
 const heroVideo = document.querySelector("[data-hero-video]");
 const motionTargets = Array.from(document.querySelectorAll("[data-motion]"));
@@ -19,14 +20,39 @@ const revealObserver = new IntersectionObserver(
 
 revealTargets.forEach((target) => revealObserver.observe(target));
 
+let introFinished = false;
+
+function finishIntro() {
+  if (introFinished) return;
+  introFinished = true;
+  body.classList.remove("intro-playing");
+  body.classList.add("intro-complete");
+  updateMotion();
+}
+
 function playHeroVideo() {
-  if (!heroVideo) return;
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reducedMotion) {
-    heroVideo.pause();
+  if (!heroVideo) {
+    finishIntro();
     return;
   }
-  heroVideo.play().catch(() => {});
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) {
+    finishIntro();
+    return;
+  }
+
+  window.scrollTo(0, 0);
+  heroVideo.loop = false;
+  heroVideo.muted = true;
+  heroVideo.playsInline = true;
+  heroVideo.addEventListener("ended", finishIntro, { once: true });
+  heroVideo.addEventListener("error", finishIntro, { once: true });
+  heroVideo.play().catch(finishIntro);
+
+  window.setTimeout(() => {
+    if (heroVideo.ended || heroVideo.currentTime > 0) return;
+    finishIntro();
+  }, 2500);
 }
 
 let ticking = false;

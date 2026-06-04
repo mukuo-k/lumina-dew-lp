@@ -30,6 +30,11 @@ body {
   overflow-x: hidden;
 }
 
+body.intro-playing {
+  height: 100vh;
+  overflow: hidden;
+}
+
 img {
   display: block;
   width: 100%;
@@ -200,6 +205,49 @@ a {
 .hero-video {
   object-position: center;
   transform-origin: center;
+}
+
+body.intro-playing .progress,
+body.intro-playing .demo-notice,
+body.intro-playing .site-header,
+body.intro-playing .hero-inner {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.intro-playing .hero-video-layer {
+  position: fixed;
+  z-index: 120;
+  background: #eaf8fa;
+}
+
+body.intro-playing .hero-video {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+}
+
+body.intro-playing .hero-video-layer::after {
+  opacity: 0;
+}
+
+body.intro-complete .hero-inner,
+body.intro-complete .site-header,
+body.intro-complete .demo-notice {
+  animation: introReveal 720ms ease both;
+}
+
+@keyframes introReveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .hero-bg::after,
