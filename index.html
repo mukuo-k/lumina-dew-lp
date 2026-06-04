@@ -12,6 +12,9 @@
   </head>
   <body>
     <div class="progress" aria-hidden="true"><span></span></div>
+    <aside class="demo-notice">
+      このページは制作見本用の架空LPです。LUMINA DEWは実在する商品ではありません。
+    </aside>
 
     <header class="site-header" data-header>
       <a class="brand" href="#top" aria-label="LUMINA DEW トップへ">LUMINA DEW</a>
@@ -19,7 +22,7 @@
         <a href="#ritual">Ritual</a>
         <a href="#formula">Formula</a>
         <a href="#design">Benefits</a>
-        <a class="nav-cta" href="#cta">Reserve</a>
+        <a class="nav-cta" href="#reservation">Reserve</a>
       </nav>
     </header>
 
@@ -45,7 +48,7 @@
                 分子サイズに着目した発想で、乾燥でしぼみがちな肌印象に、満ちるようなハリと透明感を。
               </p>
               <div class="hero-actions">
-                <a class="button button-dark" href="#cta">先行予約する</a>
+                <a class="button button-dark" href="#reservation">先行予約する</a>
                 <a class="button button-light" href="#formula">テクノロジーを見る</a>
               </div>
             </div>
@@ -187,21 +190,72 @@
         </div>
       </section>
 
-      <section class="cta section-full" id="cta">
+      <section class="cta section-full" id="reservation">
         <div class="cta-image" data-motion data-speed="0.16">
           <img src="./assets/06-cta-product-lineup.png" alt="LUMINA DEWの美容液ラインアップ" />
         </div>
         <div class="cta-copy" data-reveal>
-          <p class="eyebrow">LIMITED PRE-ORDER</p>
-          <h2>乾燥印象に、満ちるようなハリ感を。</h2>
-          <p>
-            LUMINA DEW Molecular Hydration Serum<br />
-            Day Serum / Night Serum / Ritual Set
-          </p>
-          <div class="cta-actions">
-            <a class="button button-dark" href="mailto:hello@example.com?subject=LUMINA%20DEW%20Reserve">予約相談する</a>
-            <a class="button button-light" href="#top">トップへ戻る</a>
+          <div class="cta-text">
+            <p class="eyebrow">LIMITED PRE-ORDER</p>
+            <h2>乾燥印象に、満ちるようなハリ感を。</h2>
+            <p>
+              LUMINA DEW Molecular Hydration Serum<br />
+              Day Serum / Night Serum / Ritual Set
+            </p>
+            <div class="cta-actions">
+              <a class="button button-light" href="#top">トップへ戻る</a>
+            </div>
           </div>
+          <form
+            class="reserve-form"
+            name="reservation"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="./thank-you.html"
+          >
+            <input type="hidden" name="form-name" value="reservation" />
+            <p class="hidden-field">
+              <label>入力しないでください <input name="bot-field" /></label>
+            </p>
+            <p class="form-note">送信テスト用フォームです。実在の商品予約ではありません。</p>
+            <label>
+              お名前
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              メールアドレス
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              気になる肌印象
+              <select name="skin-concern" required>
+                <option value="">選択してください</option>
+                <option value="乾燥">乾燥</option>
+                <option value="ハリ不足">ハリ不足</option>
+                <option value="乾燥くすみ印象">乾燥くすみ印象</option>
+                <option value="キメの乱れ">キメの乱れ</option>
+              </select>
+            </label>
+            <label>
+              気になるアイテム
+              <select name="product-interest" required>
+                <option value="">選択してください</option>
+                <option value="Day Serum">Day Serum</option>
+                <option value="Night Serum">Night Serum</option>
+                <option value="Ritual Set">Ritual Set</option>
+              </select>
+            </label>
+            <label>
+              相談したい内容
+              <textarea name="message" rows="4" placeholder="乾燥が気になるタイミングや、使ってみたい理由など"></textarea>
+            </label>
+            <label class="check-field">
+              <input name="demo-confirmation" type="checkbox" required />
+              見本用LPであり、実在する商品予約ではないことを理解しました。
+            </label>
+            <button class="button button-dark" type="submit">送信する</button>
+          </form>
         </div>
       </section>
     </main>

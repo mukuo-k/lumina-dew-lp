@@ -10,6 +10,7 @@
   --gold-soft: #ead8af;
   --shadow: 0 18px 54px rgba(21, 61, 75, 0.18);
   --max: 1180px;
+  --notice-height: 38px;
 }
 
 * {
@@ -57,9 +58,29 @@ a {
   background: linear-gradient(90deg, var(--gold), var(--blue));
 }
 
+.demo-notice {
+  position: fixed;
+  top: 3px;
+  left: 0;
+  right: 0;
+  z-index: 78;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--notice-height);
+  padding: 8px 18px;
+  color: rgba(23, 35, 42, 0.78);
+  background: rgba(251, 253, 255, 0.9);
+  border-bottom: 1px solid rgba(185, 151, 88, 0.18);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  text-align: center;
+  backdrop-filter: blur(14px);
+}
+
 .site-header {
   position: fixed;
-  top: 0;
+  top: calc(var(--notice-height) + 3px);
   left: 0;
   right: 0;
   z-index: 70;
@@ -550,7 +571,7 @@ h3 {
 .cta {
   display: grid;
   place-items: center;
-  min-height: 94vh;
+  min-height: 100vh;
 }
 
 .cta-image {
@@ -569,12 +590,120 @@ h3 {
 .cta-copy {
   position: relative;
   z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 0.72fr);
+  align-items: center;
+  gap: 58px;
   width: min(100%, var(--max));
   padding: 100px 42px 64px;
 }
 
-.cta-copy h2 {
+.cta-text h2 {
   max-width: 520px;
+}
+
+.reserve-form {
+  display: grid;
+  gap: 12px;
+  justify-self: end;
+  width: min(100%, 470px);
+  padding: 24px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.reserve-form label {
+  display: grid;
+  gap: 6px;
+  color: rgba(23, 35, 42, 0.82);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.reserve-form input,
+.reserve-form select,
+.reserve-form textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(23, 35, 42, 0.16);
+  border-radius: 6px;
+  font: inherit;
+}
+
+.reserve-form textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.reserve-form input:focus,
+.reserve-form select:focus,
+.reserve-form textarea:focus {
+  border-color: rgba(94, 180, 199, 0.72);
+  outline: 3px solid rgba(94, 180, 199, 0.18);
+}
+
+.reserve-form .button {
+  width: 100%;
+  cursor: pointer;
+}
+
+.form-note {
+  margin: 0;
+  padding: 8px 12px;
+  color: rgba(23, 35, 42, 0.66);
+  background: rgba(234, 248, 250, 0.76);
+  border: 1px solid rgba(94, 180, 199, 0.2);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.hidden-field {
+  display: none;
+}
+
+.check-field {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 500 !important;
+  line-height: 1.55;
+}
+
+.check-field input {
+  width: auto;
+  min-height: auto;
+  margin-top: 7px;
+}
+
+.thanks-page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: calc(var(--notice-height) + 118px) 24px 80px;
+  background: #eaf8fa;
+}
+
+.thanks-panel {
+  width: min(100%, 680px);
+  padding: 52px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  text-align: center;
+}
+
+.thanks-panel p:not(.eyebrow) {
+  color: var(--muted);
 }
 
 [data-reveal] {
@@ -598,6 +727,10 @@ h3 {
 }
 
 @media (max-width: 980px) {
+  :root {
+    --notice-height: 44px;
+  }
+
   .site-header {
     padding: 18px 22px;
   }
@@ -629,8 +762,18 @@ h3 {
   .intro,
   .split,
   .design-grid,
-  .steps {
+  .steps,
+  .cta-copy {
     grid-template-columns: 1fr;
+  }
+
+  .cta-copy {
+    gap: 30px;
+  }
+
+  .reserve-form {
+    justify-self: stretch;
+    width: 100%;
   }
 
   .intro {
@@ -657,6 +800,15 @@ h3 {
 }
 
 @media (max-width: 680px) {
+  :root {
+    --notice-height: 58px;
+  }
+
+  .demo-notice {
+    padding: 7px 14px;
+    font-size: 0.72rem;
+  }
+
   .site-header {
     align-items: flex-start;
     padding: 14px 16px;
@@ -727,6 +879,14 @@ h3 {
 
   .cta-copy {
     padding: 94px 18px 38px;
+  }
+
+  .reserve-form {
+    padding: 22px;
+  }
+
+  .thanks-panel {
+    padding: 34px 22px;
   }
 }
 
