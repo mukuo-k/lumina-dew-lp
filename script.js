@@ -21,10 +21,18 @@ const revealObserver = new IntersectionObserver(
 revealTargets.forEach((target) => revealObserver.observe(target));
 
 let introFinished = false;
+let introVideoShown = false;
+
+function showIntroVideo() {
+  if (introVideoShown) return;
+  introVideoShown = true;
+  body.classList.add("intro-video-started");
+}
 
 function finishIntro() {
   if (introFinished) return;
   introFinished = true;
+  showIntroVideo();
   body.classList.remove("intro-playing");
   body.classList.add("intro-complete");
   updateMotion();
@@ -45,6 +53,19 @@ function playHeroVideo() {
   heroVideo.loop = false;
   heroVideo.muted = true;
   heroVideo.playsInline = true;
+  heroVideo.removeAttribute("poster");
+  heroVideo.addEventListener("timeupdate", () => {
+    if (heroVideo.currentTime > 0.08) {
+      showIntroVideo();
+    }
+  });
+  heroVideo.addEventListener("playing", () => {
+    window.requestAnimationFrame(() => {
+      if (heroVideo.currentTime > 0.08) {
+        showIntroVideo();
+      }
+    });
+  });
   heroVideo.addEventListener("ended", finishIntro, { once: true });
   heroVideo.addEventListener("error", finishIntro, { once: true });
   heroVideo.play().catch(finishIntro);
