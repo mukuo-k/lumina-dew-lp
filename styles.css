@@ -19,6 +19,7 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -259,6 +260,11 @@ body.intro-complete .demo-notice {
   background:
     linear-gradient(90deg, rgba(251, 253, 255, 0.86) 0%, rgba(251, 253, 255, 0.42) 34%, rgba(251, 253, 255, 0.08) 58%),
     linear-gradient(0deg, rgba(251, 253, 255, 0.74) 0%, rgba(251, 253, 255, 0) 22%);
+}
+
+.hero-video-layer::after {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .hero-inner {
