@@ -177,7 +177,6 @@ a {
 }
 
 .hero-bg img,
-.hero-video,
 .cta-image img {
   height: 100%;
   object-fit: cover;
@@ -203,6 +202,9 @@ a {
 }
 
 .hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   object-position: center;
   transform-origin: center;
 }
@@ -216,8 +218,7 @@ body.intro-playing .hero-inner {
 }
 
 body.intro-playing .hero-video-layer {
-  position: fixed;
-  z-index: 120;
+  z-index: 5;
   background: #eaf8fa;
 }
 
@@ -877,7 +878,6 @@ h3 {
   }
 
   .hero-bg img,
-  .hero-video,
   .cta-image img,
   .sticky-media img {
     object-position: 62% center;
@@ -888,10 +888,6 @@ h3 {
   }
 
   .hero-video {
-    inset: calc(var(--notice-height) + 72px) 0 auto;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
     object-position: center;
     transform: none;
   }
