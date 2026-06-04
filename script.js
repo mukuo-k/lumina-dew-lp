@@ -1,18 +1,10 @@
 const root = document.documentElement;
 const header = document.querySelector("[data-header]");
-const hero = document.querySelector(".hero");
-const heroFrame = document.querySelector("[data-hero-frame]");
+const heroVideo = document.querySelector("[data-hero-video]");
 const motionTargets = Array.from(document.querySelectorAll("[data-motion]"));
 const revealTargets = Array.from(document.querySelectorAll("[data-reveal], [data-float]"));
 
-const HERO_SEQUENCE_PATH = "./assets/hero-video-sequence/";
-const HERO_FRAME_COUNT = 60;
-
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-const easeInOut = (value) => {
-  const t = clamp(value, 0, 1);
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-};
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -27,39 +19,14 @@ const revealObserver = new IntersectionObserver(
 
 revealTargets.forEach((target) => revealObserver.observe(target));
 
-function heroFrameSrc(index) {
-  return `${HERO_SEQUENCE_PATH}frame-${String(index).padStart(3, "0")}.webp`;
-}
-
-function preloadHeroFrames() {
-  if (!heroFrame) return;
-  for (let i = 0; i < HERO_FRAME_COUNT; i += 1) {
-    const image = new Image();
-    image.decoding = "async";
-    image.src = heroFrameSrc(i);
+function playHeroVideo() {
+  if (!heroVideo) return;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) {
+    heroVideo.pause();
+    return;
   }
-}
-
-function getHeroProgress(scrollY) {
-  if (!hero) return 0;
-  const start = hero.offsetTop;
-  const distance = Math.max(hero.offsetHeight - window.innerHeight, 1);
-  return clamp((scrollY - start) / distance, 0, 1);
-}
-
-function updateHeroFrame(progress) {
-  if (!heroFrame) return;
-  const frameIndex = Math.round(progress * (HERO_FRAME_COUNT - 1));
-  const clampedIndex = clamp(frameIndex, 0, HERO_FRAME_COUNT - 1);
-  const currentIndex = Number(heroFrame.dataset.frameIndex || -1);
-
-  if (currentIndex !== clampedIndex) {
-    heroFrame.src = heroFrameSrc(clampedIndex);
-    heroFrame.dataset.frameIndex = String(clampedIndex);
-  }
-
-  const scale = 1.01 + easeInOut(progress) * 0.026;
-  root.style.setProperty("--hero-frame-scale", scale.toFixed(4));
+  heroVideo.play().catch(() => {});
 }
 
 let ticking = false;
@@ -73,8 +40,6 @@ function updateMotion() {
   if (header) {
     header.classList.toggle("is-scrolled", scrollY > 40);
   }
-
-  updateHeroFrame(getHeroProgress(scrollY));
 
   motionTargets.forEach((target) => {
     const rect = target.getBoundingClientRect();
@@ -99,7 +64,10 @@ function requestMotionUpdate() {
 
 window.addEventListener("scroll", requestMotionUpdate, { passive: true });
 window.addEventListener("resize", requestMotionUpdate);
-window.addEventListener("load", updateMotion);
+window.addEventListener("load", () => {
+  playHeroVideo();
+  updateMotion();
+});
 
-preloadHeroFrames();
+playHeroVideo();
 updateMotion();

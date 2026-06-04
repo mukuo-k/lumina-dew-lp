@@ -32,13 +32,19 @@
           <div class="hero-bg" data-motion data-speed="0.18">
             <img src="./assets/01-hero-first-view.png" alt="" />
           </div>
-          <div class="hero-frame-layer" data-motion data-speed="0.08" aria-hidden="true">
-            <img
-              class="hero-frame"
-              data-hero-frame
-              src="./assets/hero-video-sequence/frame-000.webp"
-              alt=""
-            />
+          <div class="hero-video-layer" aria-hidden="true">
+            <video
+              class="hero-video"
+              data-hero-video
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              poster="./assets/hero-video-sequence/frame-000.webp"
+            >
+              <source src="./assets/hero-intro-video.mp4" type="video/mp4" />
+            </video>
           </div>
           <div class="hero-inner">
             <div class="hero-copy" data-reveal>
