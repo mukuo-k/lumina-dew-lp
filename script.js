@@ -2,7 +2,6 @@ const root = document.documentElement;
 const body = document.body;
 const header = document.querySelector("[data-header]");
 const heroVideo = document.querySelector("[data-hero-video]");
-const heroVideoFill = document.querySelector("[data-hero-video-fill]");
 const motionTargets = Array.from(document.querySelectorAll("[data-motion]"));
 const revealTargets = Array.from(document.querySelectorAll("[data-reveal], [data-float]"));
 
@@ -51,22 +50,11 @@ function playHeroVideo() {
   }
 
   window.scrollTo(0, 0);
-  const useVideoFill =
-    heroVideoFill && window.matchMedia("(max-width: 680px)").matches;
   heroVideo.loop = false;
   heroVideo.muted = true;
   heroVideo.playsInline = true;
   heroVideo.removeAttribute("poster");
-  if (useVideoFill) {
-    heroVideoFill.loop = false;
-    heroVideoFill.muted = true;
-    heroVideoFill.playsInline = true;
-    heroVideoFill.removeAttribute("poster");
-  }
   heroVideo.addEventListener("timeupdate", () => {
-    if (useVideoFill && Math.abs(heroVideoFill.currentTime - heroVideo.currentTime) > 0.28) {
-      heroVideoFill.currentTime = heroVideo.currentTime;
-    }
     if (heroVideo.currentTime > 0.08) {
       showIntroVideo();
     }
@@ -80,9 +68,6 @@ function playHeroVideo() {
   });
   heroVideo.addEventListener("ended", finishIntro, { once: true });
   heroVideo.addEventListener("error", finishIntro, { once: true });
-  if (useVideoFill) {
-    heroVideoFill.play().catch(() => {});
-  }
   heroVideo.play().catch(finishIntro);
 
   window.setTimeout(() => {
