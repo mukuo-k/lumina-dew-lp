@@ -1,0 +1,8 @@
+name = "lumina-dew-lp"
+compatibility_date = "2026-06-01"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lumina-dew-lp"
+database_id = "replace-with-your-d1-database-id"

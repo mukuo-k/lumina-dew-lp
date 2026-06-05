@@ -1,0 +1,15 @@
+{
+  "name": "lumina-dew-lp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev .",
+    "deploy": "wrangler pages deploy .",
+    "db:migrate:local": "wrangler d1 migrations apply lumina-dew-lp --local",
+    "db:migrate:remote": "wrangler d1 migrations apply lumina-dew-lp --remote"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

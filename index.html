@@ -213,17 +213,17 @@
           </div>
           <form
             class="reserve-form"
+            data-reservation-form
             name="reservation"
             method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            action="./thank-you.html"
+            action="/api/reservations"
           >
             <input type="hidden" name="form-name" value="reservation" />
             <p class="hidden-field">
               <label>入力しないでください <input name="bot-field" /></label>
             </p>
-            <p class="form-note">送信テスト用フォームです。実在の商品予約ではありません。</p>
+            <p class="form-note">送信内容は見本用の管理画面に保存されます。実在の商品予約ではありません。</p>
+            <p class="form-status" data-form-status hidden></p>
             <label>
               お名前
               <input name="name" type="text" autocomplete="name" required />

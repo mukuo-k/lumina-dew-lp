@@ -2,6 +2,7 @@ const root = document.documentElement;
 const body = document.body;
 const header = document.querySelector("[data-header]");
 const heroVideo = document.querySelector("[data-hero-video]");
+const reservationForm = document.querySelector("[data-reservation-form]");
 const motionTargets = Array.from(document.querySelectorAll("[data-motion]"));
 const revealTargets = Array.from(document.querySelectorAll("[data-reveal], [data-float]"));
 
@@ -109,6 +110,58 @@ function requestMotionUpdate() {
   }
 }
 
+function setupReservationForm() {
+  if (!reservationForm) return;
+
+  const status = reservationForm.querySelector("[data-form-status]");
+  const submitButton = reservationForm.querySelector("button[type='submit']");
+  const originalText = submitButton?.textContent || "送信する";
+
+  function setStatus(message, type = "info") {
+    if (!status) return;
+    status.hidden = false;
+    status.textContent = message;
+    status.dataset.type = type;
+  }
+
+  reservationForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (window.location.protocol === "file:") {
+      setStatus("バックエンド送信はCloudflare Pages上で確認できます。", "error");
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "送信中...";
+    setStatus("送信しています。");
+
+    try {
+      const response = await fetch(reservationForm.action, {
+        method: "POST",
+        body: new FormData(reservationForm),
+        headers: {
+          accept: "application/json",
+        },
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.ok) {
+        const message = data.errors?.join(" ") || data.message || "送信に失敗しました。";
+        throw new Error(message);
+      }
+
+      reservationForm.reset();
+      setStatus("送信を受け付けました。管理画面に保存されています。", "success");
+    } catch (error) {
+      setStatus(error.message || "送信に失敗しました。時間をおいてもう一度お試しください。", "error");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    }
+  });
+}
+
 window.addEventListener("scroll", requestMotionUpdate, { passive: true });
 window.addEventListener("resize", requestMotionUpdate);
 window.addEventListener("load", () => {
@@ -118,3 +171,4 @@ window.addEventListener("load", () => {
 
 playHeroVideo();
 updateMotion();
+setupReservationForm();

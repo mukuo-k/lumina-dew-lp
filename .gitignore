@@ -1,1 +1,4 @@
 preview-*.png
+node_modules/
+.wrangler/
+.dev.vars

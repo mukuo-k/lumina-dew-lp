@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LUMINA DEW | Admin</title>
+    <meta name="description" content="LUMINA DEW見本LPの送信内容管理画面。" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true"><span></span></div>
+    <aside class="demo-notice">
+      このページは制作見本用の管理画面です。LUMINA DEWは実在する商品ではありません。
+    </aside>
+
+    <main class="admin-page">
+      <section class="admin-shell">
+        <div class="admin-head">
+          <div>
+            <p class="eyebrow">ADMIN</p>
+            <h1>予約・相談一覧</h1>
+          </div>
+          <a class="button button-light" href="./index.html">LPへ戻る</a>
+        </div>
+
+        <form class="admin-card admin-login" data-admin-login>
+          <label>
+            管理パスワード
+            <input data-admin-token type="password" autocomplete="current-password" required />
+          </label>
+          <button class="button button-dark" type="submit">表示する</button>
+        </form>
+
+        <div class="admin-card">
+          <div class="admin-toolbar">
+            <p data-admin-notice>管理パスワードを入力してください。</p>
+            <div>
+              <select data-status-filter aria-label="ステータスで絞り込み">
+                <option value="">すべて</option>
+                <option value="new">新規</option>
+                <option value="contacted">対応済み</option>
+                <option value="archived">保留</option>
+              </select>
+              <button class="button button-light" data-refresh type="button">更新</button>
+            </div>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>送信日時</th>
+                  <th>お客様</th>
+                  <th>肌印象</th>
+                  <th>アイテム</th>
+                  <th>相談内容</th>
+                  <th>状態</th>
+                </tr>
+              </thead>
+              <tbody data-reservations>
+                <tr>
+                  <td colspan="7">まだ読み込まれていません。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./admin.js"></script>
+  </body>
+</html>
